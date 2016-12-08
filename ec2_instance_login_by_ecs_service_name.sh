@@ -119,8 +119,8 @@ fi
 tasks_length=$(echo $tasks_json | jq length)
 for i in $( seq 0 $(($tasks_length - 1)) ); do
   task_json=$(echo $tasks_json | jq .[$i])
-  task_definition=$(echo $task_json | jq .taskDefinitionArn | sed -e 's/"[^"\/]*\/\([^"\/]*\)"/\1/')
-  if [ -n "$task_definition" ]; then
+  task_definition_looped=$(echo $task_json | jq .taskDefinitionArn | sed -e 's/"[^"\/]*\/\([^"\/]*\)"/\1/')
+  if [ "$task_definition" =  "$task_definition_looped" ]; then
     container_instance_arn=$(echo $task_json | jq .containerInstanceArn)
     break
   fi
