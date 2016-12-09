@@ -98,7 +98,7 @@ fi
 # get public IP from ECS service name
 echo Start to process login ...
 
-task_definition_arn=$(aws ecs describe-services --output json --service $ECS_SERVICE_NAME | jq '.services[].taskDefinition')
+task_definition_arn=$(aws ecs describe-services --output json --cluster $CLUSTER_NAME --service $ECS_SERVICE_NAME | jq '.services[].taskDefinition')
 if [ -z "$task_definition_arn" ]; then
   echo 'Error: task definition not found. (wrong service name?)'
   exit 1
